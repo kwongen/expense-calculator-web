@@ -1,0 +1,198 @@
+:root {
+    --white: #fff;
+    --black: #333;
+    --darkblue: #1b4965;
+    --lightblue: #edf2f4;
+    --table-border: #dde7ea;
+    --indicator: #bb1fa4;
+}
+
+@media screen and (max-width: 992px) {
+    .rounded-border-left {
+        border-radius: 0px 0px 0px 0x;
+    }
+
+    .rounded-border {
+        border-radius: 0px 0px 0px 0px;
+    }
+}
+  
+@media screen and (min-width: 992px) {
+    .rounded-border-left {
+        border-radius: 7px 0px 0px 7px;
+    }
+
+    .rounded-border {
+        border-radius: 7px 7px 7px 7px;
+    }
+}
+
+.expense-item-heading {
+    width: 7rem;
+    display: inline-block;
+}
+
+.expense-button {
+    width: 48%
+}
+
+/* TABLE STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+table.expense-table {
+  margin: 20px 0 20px;
+  text-align: left;
+  border-collapse: collapse;
+  border: 1px solid var(--table-border);
+}
+
+table.expense-table thead th {
+  color: var(--white);
+  background: var(--darkblue);
+  padding: 5px;
+}
+
+table.expense-table td {
+  width: 100%;
+  padding: 0px;
+}
+
+table.expense-table td:first-child {
+  position: relative;
+  padding-right: 0px;
+}
+
+table.expense-table td:first-child::before {
+  display: none;
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  /* width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--indicator); */
+  width: 0;
+  height: 0;
+  border-top: 15px solid transparent;
+  border-bottom: 15px solid transparent;
+  border-left: 15px solid var(--indicator);
+}
+
+table.expense-table td:nth-child(2) {
+  position: relative;
+}
+
+table.expense-table tbody tr {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  counter-increment: counter;
+}
+
+table.expense-table tbody tr::before {
+  content: counter(counter);
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: bold;
+  color: var(--white);
+  background: var(--black);
+  z-index: 1;
+}
+
+table.expense-table tbody tr:nth-of-type(even)>* {
+  background: var(--lightblue);
+}
+
+
+/* MQ STYLES
+  –––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media (max-width: 999px) {
+  .visible-row {
+    display: none;
+  }
+
+  table.expense-table td {
+    padding: 10px;
+    text-align: left;
+  }
+}
+
+@media (min-width: 700px) {
+  table.expense-table td {
+    padding: 10px;
+  }
+}
+
+@media (min-width: 700px) and (max-width: 999px) {
+  table.expense-table tbody {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  table.expense-table tbody tr {
+    width: 50%;
+  }
+
+  table.expense-table tbody tr:nth-of-type(even)>* {
+    background: transparent;
+  }
+
+  table.expense-table tbody tr:nth-of-type(4n)>*,
+  table tbody tr:nth-of-type(4n + 1)>* {
+    background: var(--lightblue);
+  }
+}
+
+@media (min-width: 999px) {
+  .hidden-col {
+    display: none;
+  }
+
+  table.expense-table {
+    border: none;
+  }
+
+  table.expense-table th,
+  table.expense-table td {
+    width: 12.5%;
+    text-align: center;
+  }
+
+  table.expense-table td:first-child {
+    padding-right: 0;
+  }
+
+  table.expense-table tbody tr {
+    display: table-row;
+  }
+
+  table.expense-table tbody tr::before {
+    display: none;
+  }
+}
+
+@media (hover: hover) and (min-width: 1000px) {
+  table.expense-table tbody tr:hover {
+    cursor: pointer;
+  }
+
+  table.expense-table tbody tr:hover img {
+    display: block;
+  }
+
+  table.expense-table tbody tr:hover td:first-child::before {
+    display: block;
+  }
+}
+
+@media (min-width: 1250px) {
+  table.expense-table td:first-child::before {
+    right: calc(100% + 5px);
+  }
+}

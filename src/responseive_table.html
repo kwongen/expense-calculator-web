@@ -1,0 +1,307 @@
+<html>
+    <head>
+        <title>Response Table</title>
+        <style>
+            /* RESET & BASIC STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+:root {
+  --white: #fff;
+  --black: #333;
+  --darkblue: #1b4965;
+  --lightblue: #edf2f4;
+  --table-border: #dde7ea;
+}
+
+* {
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  margin: 50px 0 150px;
+  font-family: "Noto Sans Mono", monospace;
+}
+
+.container {
+  max-width: 1200px;
+  padding: 0 15px;
+  margin: 0 auto;
+}
+
+/* TABLE STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+table {
+  margin: 50px 0 20px;
+  text-align: left;
+  border-collapse: collapse;
+  border: 1px solid var(--table-border);
+}
+
+table th {
+  color: var(--white);
+  background: var(--darkblue);
+  padding: 20px;
+}
+
+table td {
+  width: 100%;
+  padding: 10px;
+}
+
+table td:first-child {
+  position: relative;
+  padding-right: 60px;
+}
+
+table td:first-child::before {
+  display: none;
+  content: "";
+  position: absolute;
+  right: 100%;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--black);
+}
+
+table td:nth-child(2) {
+  position: relative;
+}
+
+table tbody tr {
+  display: flex;
+  flex-wrap: wrap;
+  position: relative;
+  counter-increment: counter;
+}
+
+table tbody tr::before {
+  content: counter(counter);
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  width: 30px;
+  line-height: 30px;
+  text-align: center;
+  border-radius: 50%;
+  font-weight: bold;
+  color: var(--white);
+  background: var(--black);
+  z-index: 1;
+}
+
+table tbody tr:nth-of-type(even) > * {
+  background: var(--lightblue);
+}
+
+table img {
+  display: none;
+  position: absolute;
+  top: 20px;
+  left: 45%;
+  max-width: 150px;
+  z-index: 1;
+}
+
+.table-credits {
+  font-size: 12px;
+}
+
+/* MQ STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+@media (max-width: 999px) {
+  .visible\@l {
+    display: none;
+  }
+}
+
+@media (min-width: 700px) {
+  table td {
+    padding: 20px;
+  }
+}
+
+@media (min-width: 700px) and (max-width: 999px) {
+  table tbody {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  table tbody tr {
+    width: 50%;
+  }
+
+  table tbody tr:nth-of-type(even) > * {
+    background: transparent;
+  }
+
+  table tbody tr:nth-of-type(4n) > *,
+  table tbody tr:nth-of-type(4n + 1) > * {
+    background: var(--lightblue);
+  }
+}
+
+@media (min-width: 1000px) {
+  .hidden\@l {
+    display: none;
+  }
+
+  .container {
+    padding: 0 30px;
+  }
+
+  table {
+    border: none;
+  }
+
+  table th,
+  table td {
+    width: 25%;
+  }
+
+  table td:first-child {
+    padding-right: 0;
+  }
+
+  table tbody tr {
+    display: table-row;
+  }
+
+  table tbody tr::before {
+    display: none;
+  }
+}
+
+@media (hover: hover) and (min-width: 1000px) {
+  table tbody tr:hover {
+    cursor: pointer;
+  }
+  table tbody tr:hover img {
+    display: block;
+  }
+
+  table tbody tr:hover td:first-child::before {
+    display: block;
+  }
+}
+
+@media (min-width: 1250px) {
+  table td:first-child::before {
+    right: calc(100% + 20px);
+  }
+}
+
+/* FOOTER STYLES
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+.page-footer {
+  position: fixed;
+  right: 0;
+  bottom: 50px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  z-index: 1;
+  background: var(--white);
+}
+
+.page-footer a {
+  display: flex;
+  margin-left: 4px;
+}
+
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>Some of Steven Spielberg’s Movies</h1>
+            <table>
+              <thead class="visible@l">
+                <tr>
+                  <th>Title</th>
+                  <th>Year</th>
+                  <th>Stars</th>
+                  <th>Plot</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong class="hidden@l">Title:</strong> Firelight</td>
+                  <td>
+                    <strong class="hidden@l">Year:</strong> 1964
+                    <img width="140" height="209" src="https://assets.codepen.io/162656/firelight.jpg" alt="Firelight">
+                  </td>
+                  <td><strong class="hidden@l">Stars:</strong> Robert Robyn, Beth Weber, Lucky Lohr, Margaret Peyou</td>
+                  <td>
+                    <strong class="hidden@l">Plot:</strong> Menacing flying saucers attack the citizens of a town
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong class="hidden@l">Title:</strong> Duel</td>
+                  <td>
+                    <strong class="hidden@l">Year:</strong> 1971
+                    <img width="140" height="209" src="https://assets.codepen.io/162656/duel.jpg" alt="Duel">
+                  </td>
+                  <td><strong class="hidden@l">Stars:</strong> Dennis Weaver, Jacqueline Scott, Eddie Firestone, Lou Frizzell</td>
+                  <td>
+                    <strong class="hidden@l">Plot:</strong> A business commuter is pursued and terrorized by the malevolent driver of a massive tractor-trailer.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong class="hidden@l">Title:</strong> The Sugarland Express</td>
+                  <td>
+                    <strong class="hidden@l">Year:</strong> 1974
+                    <img width="140" height="209" src="https://assets.codepen.io/162656/The+Sugarland+Express.jpg" alt="The Sugarland Express">
+                  </td>
+                  <td><strong class="hidden@l">Stars:</strong> Goldie Hawn, Ben Johnson, Michael Sacks, William Atherton</td>
+                  <td>
+                    <strong class="hidden@l">Plot:</strong> A woman attempts to reunite her family by helping her husband escape prison and together kidnapping their son. But things don't go as planned when they are forced to take a police hostage on the road.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong class="hidden@l">Title:</strong> Jaws</td>
+                  <td>
+                    <strong class="hidden@l">Year:</strong>1975
+                    <img width="140" height="209" src="https://assets.codepen.io/162656/jaws.jpg" alt="Jaws">
+                  </td>
+                  <td><strong class="hidden@l">Stars:</strong> Roy Scheider, Robert Shaw, Richard Dreyfuss, Lorraine Gary</td>
+                  <td>
+                    <strong class="hidden@l">Plot:</strong> When a killer shark unleashes chaos on a beach community off Cape Cod, it's up to a local sheriff, a marine biologist, and an old seafarer to hunt the beast down.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong class="hidden@l">Title:</strong> Close Encounters of the Third Kind</td>
+                  <td>
+                    <strong class="hidden@l">Year:</strong>
+                    1977
+                    <img width="140" height="209" src="https://assets.codepen.io/162656/Close+Encounters+of+the+Third+Kind.jpg" alt="Close Encounters of the Third Kind">
+                  </td>
+                  <td><strong class="hidden@l">Stars:</strong> Richard Dreyfuss, François Truffaut, Teri Garr, Melinda Dillon</td>
+                  <td>
+                    <strong class="hidden@l">Plot:</strong> Roy Neary, an Indiana electric lineman, finds his quiet and ordinary daily life turned upside down after a close encounter with a UFO, spurring him to an obsessed cross-country quest for answers as a momentous event approaches.
+                  </td>
+                </tr>
+                <tr>
+                  <td><strong class="hidden@l">Title:</strong> 1941</td>
+                  <td>
+                    <strong class="hidden@l">Year:</strong> 1979
+                    <img width="140" height="209" src="https://assets.codepen.io/162656/1941.jpg" alt="1941">
+                  </td>
+                  <td><strong class="hidden@l">Stars:</strong> John Belushi, Dan Aykroyd, Treat Williams, Nancy Allen</td>
+                  <td>
+                    <strong class="hidden@l">Plot:</strong> Hysterical Californians prepare for a Japanese invasion in the days after Pearl Harbor.
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <p class="table-credits">Table info by <a href="https://www.imdb.com/list/ls069394158/" target="_blank">imdb.com</a></p>
+          </div>
+          <footer class="page-footer">
+            <span>made by </span>
+            <a href="https://georgemartsoukos.com/" target="_blank">
+              <img width="24" height="24" src="https://assets.codepen.io/162656/george-martsoukos-small-logo.svg" alt="George Martsoukos logo">
+            </a>
+          </footer>       
+    </body>
+</html>

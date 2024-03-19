@@ -1,5 +1,13 @@
 .App {
   text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
 }
 
 .App-logo {
@@ -11,17 +19,6 @@
   .App-logo {
     animation: App-logo-spin infinite 20s linear;
   }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
 .App-link {
@@ -36,3 +33,127 @@
     transform: rotate(360deg);
   }
 }
+
+.xform-control::placeholder {
+  color: rgb(108, 107, 107);
+  opacity: 1;
+}
+
+.xform-control {
+  background-color: #333539;
+  border-color: #9d9d9f;
+  color: white;
+}
+
+.xform-control:focus {
+  border-color: #a2ff80 !important;
+  border-width: medium;
+  color: white;
+  background-color: #333539;
+  outline: 0;
+  box-shadow: 0 0 0 0.25rem rgba(13, 253, 177, 0.25);
+}
+
+.Login, .Register  {
+  text-align: center;
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.Main {
+  width:100vw;
+  text-align: center;
+  background-color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: black;
+}
+
+.login-card, .register-card {
+  width: 35rem;
+}
+
+@media screen and (max-width: 576px) {
+  .login-card, .register-card {
+    width: 25rem;
+  }
+}
+
+
+.mb_nav_outer {
+  z-index: 100;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  max-width: 100%;
+  background-color: #fff;
+}
+
+.flex-container {
+  /* We first create a flex layout context */
+  display: flex;
+  
+  /* Then we define the flow direction 
+     and if we allow the items to wrap 
+   * Remember this is the same as:
+   * flex-direction: row;
+   * flex-wrap: wrap;
+   */
+  flex-flow: row wrap;
+  flex-wrap: wrap;
+
+  /* Then we define how is distributed the remaining space */
+  justify-content: start ;
+  
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.protest-riot-regular-lg {
+  font-family: "Protest Riot", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 35px;
+}
+
+.friend-modal-body {
+  height: 500px;
+  overflow-y: auto;
+}
+
+@media screen and (max-height: 600px) {
+  .friend-modal-body {
+    height: 350px;
+    overflow-y: auto;
+  }
+}
+
+.event-form-label {
+  width: 9rem;
+}
+
+.event-form-button {
+  width: 12rem;
+}
+
+@media screen and (max-width: 576px) {
+  .event-form-button {
+    width: 9rem;
+  }
+}
+
+.ccy-select-box {
+  max-width: 9rem;
+}
+
+

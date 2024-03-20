@@ -79,6 +79,15 @@ function App() {
 
   const value = { userProfile, setUserProfile, initializeAccess, resetAccess };
 
+  const NotFound = () => {
+    return (
+      <div style={{margin:"20px 20px 20px 20px"}}>
+        <h1>404 - Page Not Found</h1>
+        <p>Sorry, the page you are looking for could not be found.</p>
+      </div>
+    );
+  };
+
   return (
     <AuthContext.Provider value={value}>
     <> 
@@ -118,7 +127,8 @@ function App() {
             </Route> 
             <Route element={<ProtectedRoute isAuthenticated={userProfile.isAuthenticated} />}>
               <Route path="/main/calculation/view" element={<ViewCalculation />} />
-            </Route>     
+            </Route>
+            <Route path="*" element={<NotFound />} />
           </Routes>
     }
     </>

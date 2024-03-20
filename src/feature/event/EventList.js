@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import { ScrollRestoration, Link } from "react-router-dom";
 import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
+import Container from "react-bootstrap/Container";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
 
 import { useAuthContext } from "../../context/AuthContext"
 import { getEventApi, deactivateEventApi } from "../../api/EventApi"
@@ -14,6 +16,7 @@ import EventCard from "./component/EventCard";
 
 function EventList () {
     const [events, setEvents] = useState([]);
+    const [pageReady, setPageReady] = useState(false);
     const [alertConfig, setAlertConfig] = useState({show:false, heading:"", body:""});
     const [yesNoModalConfig, setYesNoModalConfig] = useState({show:false, heading:"", body:""});
     const [deleteEventId, setDeleteEventId] = useState();
@@ -33,6 +36,7 @@ function EventList () {
             setAlertConfig({show:true, heading:"Failed to load your events:", body: result.error});
         } else {
             setEvents(result);
+            setPageReady(true);
         }
     });
 
@@ -69,23 +73,36 @@ function EventList () {
                 handleModalClose={() => setMsgModalConfig({ show: false, heading: "", body: "" })} />
             <MessageAlert alertConfig={alertConfig}  />
             <div className="flex-container card-deck">
-                {events && events.map((anEvent) => <EventCard key={`eventCard_${anEvent._id}`} eventData={anEvent} onDelete={deleteEvent} />)}
+                {pageReady && events && events.map((anEvent) => <EventCard key={`eventCard_${anEvent._id}`} eventData={anEvent} onDelete={deleteEvent} />)}
             </div>
-            {events && events.length === 0 && (
-                <div className=" d-flex justify-content-center">
-                    <Card className="w-75 my-5 py-3 px-5">
-                        <Card.Body className="">
-                            <Card.Title className="text-success fs-1">Welcome to Expense Calculator!</Card.Title>
-                            <Card.Body className="text-secondary fs-2">
-                                <ol>
-                                    <li>Create your <Link to="/main/friend/list">friend &amp; family</Link> list.</li>
-                                    <li>Create <Link to="/main/event/add">event(s)</Link> for entering your expenses.</li>
-                                    <li>Finally, create expenses and do calculation when ready.</li>
-                                </ol>
-                            </Card.Body>
-                        </Card.Body>
-                    </Card>
-                </div>
+            {pageReady && events && events.length === 0 && (
+                <Container className="">
+                    <Row className="">
+                        <Col xs={12} lg={8} className="text-success fs-1">Welcome to Expense Calculator!</Col>
+                        <Col xs={12} lg={8} className="text-secondary fs-2">
+                            <ol className="mt-4">
+                                <li>Create your <Link to="/main/friend/list">friend &amp; family</Link> list.</li>
+                                <li>Create <Link to="/main/event/add">event(s)</Link> for entering your expenses.</li>
+                                <li>Finally, create expenses and do calculation when ready.</li>
+                            </ol>
+                        </Col>
+                    </Row>
+                </Container>
+
+                // <div className=" d-flex justify-content-center">
+                //     <Card className="w-75 my-5 py-3 px-5">
+                //         <Card.Body className="">
+                //             <Card.Title className="text-success fs-1">Welcome to Expense Calculator!</Card.Title>
+                //             <Card.Body className="text-secondary fs-2">
+                //                 <ol>
+                //                     <li>Create your <Link to="/main/friend/list">friend &amp; family</Link> list.</li>
+                //                     <li>Create <Link to="/main/event/add">event(s)</Link> for entering your expenses.</li>
+                //                     <li>Finally, create expenses and do calculation when ready.</li>
+                //                 </ol>
+                //             </Card.Body>
+                //         </Card.Body>
+                //     </Card>
+                // </div>
                 )}
         </SiteLayout>
     )

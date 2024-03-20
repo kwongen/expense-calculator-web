@@ -2,7 +2,7 @@ import AxiosInstance from './AxiosInstance';
 
 export const isSessionAlive = async () => {
     return AxiosInstance
-        .post('/auth/refresh-token')
+        .get('/auth/refresh-token')
         .then(response => {
             return { isAlive: true, data: response.data }
         })

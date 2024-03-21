@@ -42,3 +42,19 @@ export const addCalculationApi = async (userProfile, calculationData) => {
             return {error: error?.response?.data};
         });
 }
+
+export const deactivateCalculationApi = async (userProfile, calculationId) => {
+    const header = {headers: {"Authorization" : "Bearer " + userProfile.accessToken}};
+    const data = {profileId : userProfile.profileId,
+                calculationId: calculationId}
+
+    return await AxiosInstance
+        .post('/calculation/deactivate', data, header)
+        .then(response => {
+            return response.data
+        })
+        .catch((error) => {
+            console.log("deactivateCalculationApi: ", error?.response?.data);
+            return {error: error?.response?.data};
+        });
+}

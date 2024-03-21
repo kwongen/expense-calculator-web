@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 import { useAuthContext } from "../../context/AuthContext"
 import { getExpenseApi, deactivateExpenseApi } from "../../api/ExpenseApi"
-import { getCalculationsApi } from "../../api/CalculationApi"
+import { getCalculationsApi, deactivateCalculationApi } from "../../api/CalculationApi"
 import SiteLayout from "../../component/SiteLayout";
 import MessageAlert from "../../component/MessageAlert";
 import YesNoModal from "../../component/YesNoModal";
@@ -23,6 +23,8 @@ function ExpenseHistory () {
     const [expenseData, setExpenseData] = useState([]);
     const [lastExpenseDate, setLastExpenseDate] = useState("");
     const [calculationData, setCalculationData] = useState([]);
+    const [deleteCalculationId, setDeleteCalculationId] = useState();
+    const [deleteType, setDeleteType] = useState();
 
     const { userProfile } = useAuthContext();
     const navigate = useNavigate();    
@@ -67,11 +69,29 @@ function ExpenseHistory () {
     const deleteExpense = (index) => {
         const expense = expenseData[index];       
         const msgPart = `expense paid by ${expense.paidBy.friendName} on ${expense.expenseDate.slice(0,10)} for ${expense.expenseType.value.toLowerCase()} with amount ${expense.expenseCCY.symbol}${expense.expenseAmt.$numberDecimal}`;
-        setDeleteExpenseId(expenseData[index]._id);
+        setDeleteType("expense");
+        setDeleteExpenseId(expense._id);
         setYesNoModalConfig({show:true, heading:"Confirm", body:`Do you want to delete this ${msgPart}?`})
     }
 
-    const confirmDelete = async () => {
+    const deleteCalculation = (index) => {
+        const calculation = calculationData[index]; 
+        setDeleteType("calculation");
+        setDeleteCalculationId(calculation._id);
+        setYesNoModalConfig({show:true, heading:"Confirm", body:`Do you want to delete this calculation performed on ${calculation.createdAt.slice(0,10)}?`})
+    }
+
+    const confirmDelete = () => {
+        if(deleteType === "expense") {
+            confirmDeleteExpense();
+        }
+
+        if(deleteType === "calculation") {
+            confirmDeleteCalculation();
+        }
+    }
+
+    const confirmDeleteExpense = async () => {
         const expense = expenseData.find((exp) => exp._id === deleteExpenseId)
    
         const msgPart = `expense paid by ${expense.paidBy.friendName} on ${expense.expenseDate.slice(0,10)} for ${expense.expenseType.value.toLowerCase()} with amount ${expense.expenseCCY.symbol}${expense.expenseAmt.$numberDecimal}`;
@@ -89,6 +109,25 @@ function ExpenseHistory () {
             }
         } catch (error) {
             setMsgModalConfig({show:true, heading:"Error", body:`Failed to delete this ${msgPart}: ${error.message}`})
+        }
+    }
+
+    const confirmDeleteCalculation = async () => {
+        const calculation = calculationData.find((calc) => calc._id === deleteCalculationId)
+   
+        setYesNoModalConfig({show:false, heading:"", body:""})
+
+        try {
+            const result = await deactivateCalculationApi(userProfile, deleteCalculationId)
+
+            if(result === "success") {
+                setMsgModalConfig({show:true, heading:"Delete", body:`The calculation performed on ${calculation.createdAt.slice(0,10)} has deleted.`})
+                fetchCalculationData(eventData._id);
+            } else {
+                setMsgModalConfig({show:true, heading:"Error", body:`Failed to delete the calculation performed on ${calculation.createdAt.slice(0,10)}: ${result.error}`})               
+            }
+        } catch (error) {
+            setMsgModalConfig({show:true, heading:"Error", body:`Failed to delete the calculation performed on ${calculation.createdAt.slice(0,10)}: ${error.message}`})
         }
     }
 
@@ -151,7 +190,7 @@ function ExpenseHistory () {
                 </Row>               
             </div>  
 
-            <CalculationTable calculationData={calculationData} viewCalculation={openViewCalculationPage} deleteCalculation={deleteExpense} />
+            <CalculationTable calculationData={calculationData} viewCalculation={openViewCalculationPage} deleteCalculation={deleteCalculation} />
         </SiteLayout>
     )
 }

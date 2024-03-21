@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 import Accordion from "react-bootstrap/Accordion";
 
 const CalculationStep5 = ({formData, prev, submitForm, expenseData}) => {
-    console.log(formData)
     const expenseItemOptionDesc = ["Last expense item ONLY","ALL expense items","Manually select expense items"];
     const splitOptionDesc = ["Split the cost evenly", "Manually input split cost"];
     const exRateOptionDesc = ["Use system exchange rate","Manually input exchange rate"];

@@ -25,6 +25,7 @@ function AddCalculation () {
     const [msgModalConfig, setMsgModalConfig] = useState({show:false, heading:"", body:""});
     const [eventData, setEventData] = useState({});
     const [expenseData, setExpenseData] = useState([]);
+    const [calculationId, setCalculationId] = useState();
     const [currencyMaster, setCurrencyMaster] = useState([]);
     const [step, setStep] = useState("1");
     const allSteps = ["1", "1a", "2", "2a", "3", "4", "4a", "5"];
@@ -402,20 +403,20 @@ function AddCalculation () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setAlertConfig({show:true, heading:"Error occured:", body: response.error})
         } else {
+            setCalculationId(response._id);
             setMsgModalConfig({show:true, heading:"Message", body:"Your calculation request has completed."});
         }
     }
 
     const handleModalClose = () => {
         setMsgModalConfig({ show: false, heading: "", body: "" })
-        // navigate("/main/event/list");
-        navigate(-1);
+        //navigate(-1);
+        navigate("/main/calculation/view", {state: {eventData: eventData, calculationId:calculationId}});
     }
 
     return (
         <SiteLayout>
-            <MessageModal modalConfig={msgModalConfig}
-                handleModalClose={handleModalClose} />
+            <MessageModal modalConfig={msgModalConfig} handleModalClose={handleModalClose} />
 
             <div id="screenTitle" className="flex-container card-deck protest-riot-regular-lg">
                <span className="text-dark">New Calculation:</span><span className="text-success">{eventData.eventName}</span>

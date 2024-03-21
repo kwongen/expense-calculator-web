@@ -145,6 +145,7 @@ function ExpenseHistory () {
 
     const openViewCalculationPage = (index) => {
         navigate('/main/calculation/view', {state: {eventData: eventData, calculationData:calculationData[index]}});
+        //navigate('/main/calculation/view', {state: {eventData: eventData, calculationId:calculationData[index]._id}});
     }
 
     return (

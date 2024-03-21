@@ -14,9 +14,9 @@ export const getCalculationMasterDataApi = async (userProfile) => {
         });
 }
 
-export const getCalculationsApi = async (userProfile, eventId) => {
+export const getCalculationsApi = async (userProfile, eventId, filter={}) => {
     const header = {headers: {"Authorization" : "Bearer " + userProfile.accessToken}};
-    const data = {profileId : userProfile.profileId, eventId: eventId}
+    const data = {profileId : userProfile.profileId, eventId: eventId, filter:filter};
 
     return await AxiosInstance
         .post('/calculation/get', data, header)

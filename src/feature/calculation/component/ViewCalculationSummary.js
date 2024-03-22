@@ -7,8 +7,11 @@ import Stack from "react-bootstrap/Stack";
 import { Link45deg } from "react-bootstrap-icons";
 
 import TooltipOverlay from "../../../component/TooltipOverlay";
+import { useAuthContext } from "../../../context/AuthContext"
 
 const ViewCalculationSummary = ({eventData, calculationData}) => {
+    const { userProfile } = useAuthContext();
+
     const getFriendList = (expensesInvolved) => {
         let friendList = [];
         
@@ -40,20 +43,27 @@ const ViewCalculationSummary = ({eventData, calculationData}) => {
         const [creditorName, creditorId] = creditor.split("_");
         const totalAmtStr = `${calculationData.calculationCCY.symbol}${calculationData.calculationResult.totalAmt.$numberDecimal}`;
         let targetDebtorAmt = 0;
+        let targetDebtorName = "";
 
         let content = `${eventData.eventName}\n`
         content += `Total amount: ${totalAmtStr}\n`
         content += `No. of people: ${calculationData.calculationResult.numFriendsInvolved}\n\n`
         Object.keys(calculationData.calculationResult.simplifiedResult[creditor]).map((debtor) => {
             const [debtorName, debtorId] = debtor.split("_");
-            if(targetDebtor === debtor)
+            if(targetDebtor === debtor) {
                 targetDebtorAmt = calculationData.calculationResult.simplifiedResult[creditor][debtor];
+                targetDebtorName = debtorName;
+            }
 
             content += `${debtorName} (x${countMembers(calculationData.expensesInvolved, debtorId)}) : ${calculationData.calculationCCY.symbol}${calculationData.calculationResult.simplifiedResult[creditor][debtor]}\n`
         });
 
-        content += `\n${creditorName} asked for ${calculationData.calculationCCY.symbol}${targetDebtorAmt}. Pay in seconds, with no set up or details needed. https://settleup.starlingbank.com/kamkanerickwong?amount=${targetDebtorAmt}&message=${encodeURI(eventData.eventName)}`
-
+        content += "\n" + userProfile.paymentLinkTemplate.replaceAll("#creditor#", creditorName)
+                                        .replaceAll("#debtor#",targetDebtorName)
+                                        .replaceAll("#ccy#",calculationData.calculationCCY.symbol)
+                                        .replaceAll("#amount#",targetDebtorAmt)
+                                        .replaceAll("#event_name#",encodeURI(eventData.eventName));
+                                      
         return content;
     }
 
@@ -128,10 +138,12 @@ const ViewCalculationSummary = ({eventData, calculationData}) => {
                                             return (
                                                 <Stack key={`stack_${index}_${debtorId}`} direction="horizontal" gap={3}>
                                                     <div key={`div_1_${index}_${debtorId}`}  className="mb-1" style={{width:"9rem", height:"2rem"}}>
+                                                        {creditorId === userProfile?.myFriendId &&
                                                         <TooltipOverlay key={`tip_${index}_${debtorId}`} id={`tip`} titleStyle="text-start" title={"<center><u>Payment Info</u></center>" + getPaymentLinkContent(creditor, debtor).replaceAll("\n","<br/>") + "<br/><br/><i><center>(click to copy above text)<center></i>"}>
                                                             <Link45deg className="copy-payment" size="20" 
                                                                 onClick={() => copyPaymentLink(creditor, debtor)} />
                                                         </TooltipOverlay>
+                                                        }
                                                         {debtorName} (x{countMembers(calculationData?.expensesInvolved, debtorId)})
                                                     </div>
                                                     <div key={`div_2_${index}_${debtorId}`} className="mb-1" style={{height:"2rem"}}>:</div>

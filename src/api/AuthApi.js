@@ -16,7 +16,7 @@ export const loginApi = async (credential) => {
     return AxiosInstance
         .post('/auth/login', credential)
         .then(response => {
-//console.log("loginApi:", response)
+// console.log("loginApi:", response.data)
             return response.data;
         })
         .catch((error) => {
@@ -30,6 +30,7 @@ export const googleLoginApi = async (credential) => {
     return AxiosInstance
         .post('/auth/google-login', credential)
         .then(response => {
+// console.log("loginApi:", response.data)
             return response.data;
         })
         .catch((error) => {            

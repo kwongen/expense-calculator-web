@@ -29,6 +29,20 @@ export const getCalculationsApi = async (userProfile, eventId, filter={}) => {
         });
 }
 
+export const getSharedCalculationResultApi = async (eventId, calculationId, shareCode) => {
+    const data = {eventId: eventId, calculationId : calculationId, shareCode: shareCode };
+
+    return await AxiosInstance
+        .post('/calculation/get-shared-result', data)
+        .then(response => {
+            return response.data
+        })
+        .catch((error) => {
+            console.log("getSharedCalculationResultApi: ", error?.response?.data);
+            return {error: error?.response?.data};
+        });
+}
+
 export const addCalculationApi = async (userProfile, calculationData) => {
     const header = {headers: {"Authorization" : "Bearer " + userProfile.accessToken}};
 

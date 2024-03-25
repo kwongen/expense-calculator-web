@@ -21,8 +21,10 @@ import EditExpense from "./feature/expense/EditExpense"
 import ExpenseHistory from "./feature/expense/ExpenseHistory"
 import AddCalculation from "./feature/calculation/AddCalculation"
 import ViewCalculation from "./feature/calculation/ViewCalculation"
+import ShareCalculationResult from "./feature/calculation/ShareCalculationResult"
 
 import {isSessionAlive, logoutApi} from "./api/AuthApi"
+
 
 function App() {
   const initUserProfile = {uid:"", name:"", email:"", accessToken:"", loginAt:"", isAuthenticated:false};
@@ -101,6 +103,7 @@ function App() {
             <Route index element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/share/calc-result/:eventId/:calculationId/:shareCode" element={<ShareCalculationResult />} />
             <Route element={<ProtectedRoute isAuthenticated={userProfile.isAuthenticated} />}>
               <Route path="/main/friend/list" element={<FriendList />} />
             </Route>

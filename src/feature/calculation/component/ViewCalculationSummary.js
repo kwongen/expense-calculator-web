@@ -8,10 +8,11 @@ import { Link45deg } from "react-bootstrap-icons";
 
 import TooltipOverlay from "../../../component/TooltipOverlay";
 import { useAuthContext } from "../../../context/AuthContext"
+import DisplayCalulcationResult from "./DisplayCalculationResult"
 
 const ViewCalculationSummary = ({eventData, calculationData}) => {
     const { userProfile } = useAuthContext();
-
+ 
     const getFriendList = (expensesInvolved) => {
         let friendList = [];
         
@@ -121,7 +122,9 @@ const ViewCalculationSummary = ({eventData, calculationData}) => {
             <Row className="my-2">
                 <Col xs={12} lg={3} className="mb-1">Calculation Result:</Col>
                 <Col xs={12} lg={9} className="text-success">
-                    <Accordion defaultActiveKey={[0, 1, 2]} alwaysOpen className="show">
+                {calculationData?.calculationResult && 
+                        <DisplayCalulcationResult calculationData={calculationData} eventData={eventData} resutlType="simplified"/>}
+                    {/* <Accordion defaultActiveKey={[0, 1, 2]} alwaysOpen className="show">
                         {calculationData?.calculationResult && 
                             Object.keys(calculationData?.calculationResult?.simplifiedResult).map((creditor, index) => {
                             
@@ -156,7 +159,7 @@ const ViewCalculationSummary = ({eventData, calculationData}) => {
                                 </Accordion.Item>
                             )
                         })}
-                    </Accordion>                    
+                    </Accordion>                     */}
                 </Col>
             </Row>
         </Container>   

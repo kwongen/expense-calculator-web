@@ -32,7 +32,7 @@ function App() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   const [modalConfig, setModalConfig] = useState({show:false, heading:"", body:""});
  
   const onPrompt = () => {
@@ -68,7 +68,7 @@ function App() {
   }
 
   useEffect( () => {
-    isSessionAlive().then((result) => {
+    !location.pathname.startsWith("/share/") && isSessionAlive().then((result) => {
       if(result.isAlive) {
         initializeAccess(result.data.auth);   
       } else {

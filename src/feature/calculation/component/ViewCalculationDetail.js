@@ -3,11 +3,14 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Accordion from "react-bootstrap/Accordion";
 import Stack from "react-bootstrap/Stack";
+import Table from "react-bootstrap/Table";
+
 import { Link45deg } from "react-bootstrap-icons";
 
 import TooltipOverlay from "../../../component/TooltipOverlay";
 
 const ViewCalculationDetail = ({eventData, calculationData}) => {
+    console.log(calculationData)
     const getFriendList = (expensesInvolved) => {
         let friendList = [];
         
@@ -69,11 +72,34 @@ const ViewCalculationDetail = ({eventData, calculationData}) => {
         return expenseTypeCode.substring(3).replaceAll("_", " ");
     }
 
+    const getConvertedAmount = (localAmount, localCCY) => {
+        if(calculationData.calculationExRate && calculationData.calculationExRate[localCCY])
+            return Number(Number(localAmount)/calculationData.calculationExRate[localCCY]);
+
+        return Number(localAmount);
+    }
+
     const getConvertedAmountStr = (localAmount, localCCY) => {
         if(calculationData.calculationExRate && calculationData.calculationExRate[localCCY])
             return `> ${calculationData.calculationCCY.symbol}${Number(Number(localAmount)/calculationData.calculationExRate[localCCY]).toFixed(2)}`;
 
         return "";
+    }
+
+    const getParentListAllExpenses = (expensesInvolved = []) => {
+        let parentList = [];
+
+        expensesInvolved.forEach((exp) => {
+            exp.costSplit.forEach((f) => {
+                if(!parentList.find(e => e.parentId === f.friendId.parentId)) {
+                    parentList.push({parentId: f.friendId.parentId, parentName: f.friendId.parentName});
+                }
+            })
+        })
+
+        parentList.sort((a,b) => a.parentName.localeCompare(b.parentName));
+
+        return parentList;        
     }
 
     return (
@@ -95,36 +121,74 @@ const ViewCalculationDetail = ({eventData, calculationData}) => {
                 <Col xs={12} lg={9} className="text-success">{calculationData?.calculationCCY?.symbol}{calculationData?.calculationResult?.totalAmt?.$numberDecimal}</Col>
             </Row>
             <Row className="my-2">
-                <Col xs={12} lg={3} className="mb-1">Expense Involved & breakdown:</Col>
-                <Col xs={12} lg={9} className="text-success">
-                    <Accordion defaultActiveKey={[0, 1, 2]} alwaysOpen className="show">
-                        {calculationData?.expensesInvolved && 
-                            calculationData.expensesInvolved.map((exp, index) => {
-                            
+                <Col xs={12} lg={12} className="mb-1">Expense Involved & breakdown:</Col>
+                <Col xs={12} lg={12} className="text-success">
+                    {
+                        getParentListAllExpenses(calculationData?.expensesInvolved).map((p) => {
+                            let total = 0;
                             return (
-                                <Accordion.Item key={`${exp.expense._id}`} eventKey={index}>
-                                    <Accordion.Header key={`header_${index}`}>{`${exp.expense.expenseDate.slice(0,10)} / ${exp.expenseCCY.symbol}${exp.expenseAmt.$numberDecimal} ${getConvertedAmountStr(exp.expenseAmt.$numberDecimal,exp.expenseCCY._id)} / ${convertExpenseType(exp.expense.expenseType)} / paid by ${exp.paidBy.friendName}`}</Accordion.Header>
-                                    <Accordion.Body key={`body_${index}`} className="fs-6">
-                                        {
-                                            exp.costSplit.map((f) => {
+                                <Table striped bordered hover>
+                                    <thead>
+                                        <tr>
+                                            <th colSpan="2" className="bg-secondary text-light fs-6">Group under {p.parentName}</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                    {
+                                        calculationData.expensesInvolved.map((exp) => {
+                                            if(exp.costSplit.find(f => f.friendId.parentId===p.parentId)) {
+                                                const debtList =  exp.costSplit.filter((f) => f.friendId.parentId === p.parentId);
+                                                let subtotal = 0;
+
                                                 return (
-                                                    <Row key={`row${index}_${f.friendId.friendId}`} className="my-2">
-                                                        <Col key={`col_1_${index}_${f.friendId.friendId}`} xs={12} lg={3}>{f.friendId.friendName} ({f.friendId.parentName}) :</Col>
-                                                        <Col key={`col_2_${index}_${f.friendId.friendId}`} xs={12} lg={9}>{exp.expenseCCY.symbol}{f.amount.$numberDecimal} {getConvertedAmountStr(f.amount.$numberDecimal, exp.expenseCCY._id)} </Col>
-                                                    </Row>
+                                                    <>
+                                                    <tr>
+                                                        <td colSpan="2" className="text-dark fs-6"><i>Expense on  
+                                                            {` ${exp.expense.expenseDate.slice(0,10)} / 
+                                                            ${convertExpenseType(exp.expense.expenseType)} / 
+                                                            paid by ${exp.paidBy.friendName} /
+                                                            ${exp.expenseCCY.symbol}${exp.expenseAmt.$numberDecimal} ${getConvertedAmountStr(exp.expenseAmt.$numberDecimal,exp.expenseCCY._id)} 
+                                                            `}
+                                                            </i>
+                                                        </td>
+                                                    </tr>
+                                                    { 
+                                                        debtList.map((f,index) => {
+                                                            subtotal += Number(f.amount.$numberDecimal);
+                                                            total += getConvertedAmount(f.amount.$numberDecimal, exp.expenseCCY._id);
+                                                            return (
+                                                                <tr key={`row${index}_${f.friendId.friendId}`}>
+                                                                    <td key={`col_1_${index}_${f.friendId.friendId}`} style={{width:"9rem"}} className="fs-6">{f.friendId.friendName}</td>
+                                                                    <td key={`col_2_${index}_${f.friendId.friendId}`} className="fs-6">{exp.expenseCCY.symbol}{f.amount.$numberDecimal} {getConvertedAmountStr(f.amount.$numberDecimal, exp.expenseCCY._id)}</td>
+                                                                </tr>
+                                                            )
+                                                        })  
+                                                    } 
+                                                    <tr>
+                                                        <td className="text-dark text-end fs-6"><i><b>Subtotal:</b></i></td>
+                                                        <td className="text-dark fs-6"><i><b>{exp.expenseCCY.symbol}{subtotal} {getConvertedAmountStr(subtotal, exp.expenseCCY._id)} </b></i></td>
+                                                    </tr>
+                                                    </>
                                                 )
-                                            })                                           
-                                        }
-                                    </Accordion.Body>
-                                </Accordion.Item>
+                                            }
+                                        })
+                                    }
+                                    </tbody>
+                                    <tfoot>
+                                        <tr>
+                                            <td className="bg-secondary text-light text-end fs-6"><b>Total:</b></td>
+                                            <td className="bg-secondary text-light fs-6"><b>{calculationData.calculationCCY.symbol}{Math.round(total*100)/100}</b></td>
+                                        </tr>
+                                    </tfoot>
+                                </Table>
                             )
-                        })}
-                    </Accordion>                    
+                        })
+                    }
                 </Col>
             </Row>                               
             <Row className="my-2">
-                <Col xs={12} lg={3} className="mb-1">Calculation Result w/o Simplify:</Col>
-                <Col xs={12} lg={9} className="text-success">
+                <Col xs={12} lg={12} className="mb-1">Calculation Result w/o Simplify:</Col>
+                <Col xs={12} lg={12} className="text-success">
                     <Accordion defaultActiveKey={[0, 1, 2]} alwaysOpen className="show">
                         {calculationData?.calculationResult && 
                             Object.keys(calculationData?.calculationResult?.directResult).map((creditor, index) => {
@@ -142,10 +206,6 @@ const ViewCalculationDetail = ({eventData, calculationData}) => {
                                             return (
                                                 <Stack key={`stack_${index}_${debtorId}`} direction="horizontal" gap={3}>
                                                     <div key={`div_1_${index}_${debtorId}`}  className="mb-1" style={{width:"9rem", height:"2rem"}}>
-                                                        <TooltipOverlay key={`tip_${index}_${debtorId}`} id={`tip`} titleStyle="text-start" title={"<center><u>Payment Info</u></center>" + getPaymentLinkContent(creditor, debtor).replaceAll("\n","<br/>") + "<br/><br/><i><center>(click to copy above text)<center></i>"}>
-                                                            <Link45deg className="copy-payment" size="20" 
-                                                                onClick={() => copyPaymentLink(creditor, debtor)} />
-                                                        </TooltipOverlay>
                                                         {debtorName} (x{countMembers(calculationData?.expensesInvolved, debtorId)})
                                                     </div>
                                                     <div key={`div_2_${index}_${debtorId}`} className="mb-1" style={{height:"2rem"}}>:</div>

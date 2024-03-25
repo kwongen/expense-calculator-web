@@ -44,7 +44,7 @@ const DisplayCalculationResult = ({calculationData, eventData, resutlType="direc
         content += `\n${creditorName} asked for ${calculationData.calculationCCY.symbol}${targetDebtorAmt}. Pay in seconds, with no set up or details needed. https://settleup.starlingbank.com/kamkanerickwong?amount=${targetDebtorAmt}&message=${encodeURI(eventData.eventName)}`
 
         if(calculationData.shareCode)
-            content += `\n\nYou can also click this link to view calculation details: https://www.expensecalculator.co.uk/${calculationData.event}/${calculationData._id}/${calculationData.shareCode}`
+            content += `\n\nYou can also click this link to view calculation details: https://www.expensecalculator.co.uk/share/calc-result/${calculationData.event}/${calculationData._id}/${calculationData.shareCode}`
 
         return content;
     }

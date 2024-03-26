@@ -12,6 +12,7 @@ import { getCalculationsApi } from "../../api/CalculationApi"
 import ViewCalculationSummary from "./component/ViewCalculationSummary"
 import ViewCalculationDetail from "./component/ViewCalculationDetail"
 
+import "./Calculation.css";
 
 const ViewCalculation = () => {
     const [alertConfig, setAlertConfig] = useState({show:false, heading:"", body:""});
@@ -57,10 +58,10 @@ const ViewCalculation = () => {
                 fill
             >
                 <Tab eventKey="summary" title="Summary">
-                    <ViewCalculationSummary eventData={eventData} calculationData={calculationData}/>
+                    <ViewCalculationSummary eventData={eventData} calculationData={calculationData} setCalculationData={setCalculationData}/>
                 </Tab>
                 <Tab eventKey="profile" title="Detail">
-                    <ViewCalculationDetail eventData={eventData} calculationData={calculationData}/>
+                    <ViewCalculationDetail eventData={eventData} calculationData={calculationData} setCalculationData={setCalculationData}/>
                 </Tab>
             </Tabs>
             <Button size="md" variant="success" className="w-100 my-3" onClick={()=>navigate("/main/expense/history",{state: {eventData: eventData}})}>Go Back</Button>

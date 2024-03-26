@@ -67,14 +67,20 @@ function App() {
     navigate(location);
   }
 
-  useEffect( () => {
-    !location.pathname.startsWith("/share/") && isSessionAlive().then((result) => {
-      if(result.isAlive) {
-        initializeAccess(result.data.auth);   
-      } else {
-        resetAccess();     
-      }
-    });
+  useEffect(() => {
+    const skipSessionCheck = location.pathname.startsWith("/result/") || 
+                            location.pathname.startsWith("/login") || 
+                            location.pathname.startsWith("/register")
+
+    if (!skipSessionCheck) {
+      isSessionAlive().then((result) => {
+        if (result.isAlive) {
+          initializeAccess(result.data.auth);
+        } else {
+          resetAccess();
+        }
+      })
+    }
 
     setIsLoading(false);
   }, []);   // eslint-disable-line react-hooks/exhaustive-deps 
@@ -103,7 +109,7 @@ function App() {
             <Route index element={<Login />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
-            <Route path="/share/calc-result/:eventId/:calculationId/:shareCode" element={<ShareCalculationResult />} />
+            <Route path="/result/:eventId/:calculationId/:shareCode" element={<ShareCalculationResult />} />
             <Route element={<ProtectedRoute isAuthenticated={userProfile.isAuthenticated} />}>
               <Route path="/main/friend/list" element={<FriendList />} />
             </Route>

@@ -34,28 +34,29 @@ const DisplayExpenseBreakdown = ({calculationData}) => {
 
         return parentList;        
     }
-        
+
     return (
         getParentListAllExpenses(calculationData.expensesInvolved).map((p) => {
             let total = 0;
             return (
-                <Table striped bordered hover>
-                    <thead>
-                        <tr>
-                            <th colSpan="2" className="bg-secondary text-light fs-6">Group under {p.parentName}</th>
+                <Table key={`table_${p.parentId}`} striped bordered hover>
+                    <thead key={`thead_${p.parentId}`}>
+                        <tr key={`thead_tr1_${p.parentId}`}>
+                            <th  key={`thead_td1_${p.parentId}`} colSpan="2" className="bg-secondary text-light fs-6">Group under {p.parentName}</th>
                         </tr>
                     </thead>
-                    <tbody>
+                    <tbody key={`tbody_${p.parentId}`}>
                     {
-                        calculationData.expensesInvolved.map((exp) => {
+                        calculationData.expensesInvolved.map((exp, index) => {
                             if(exp.costSplit.find(f => f.friendId.parentId===p.parentId)) {
                                 const debtList =  exp.costSplit.filter((f) => f.friendId.parentId === p.parentId);
                                 let subtotal = 0;
 
                                 return (
                                     <>
-                                    <tr>
-                                        <td colSpan="2" className="text-success fs-6"><i>Expense on  
+                                    <tr key={`tbody_tr_expense_${index}_${p.parentId}`}>
+                                        <td key={`tbody_td_${exp.expense._id}_${index}_${p.parentId}`} colSpan="2" className="text-success fs-6">
+                                            <i key={`tbody_italic_${exp.expense._id}_${index}_${p.parentId}`}>Expense on  
                                             {` ${exp.expense.expenseDate.slice(0,10)} / 
                                             ${convertExpenseType(exp.expense.expenseType)} / 
                                             paid by ${exp.paidBy.friendName} /
@@ -69,16 +70,16 @@ const DisplayExpenseBreakdown = ({calculationData}) => {
                                             subtotal += Number(f.amount.$numberDecimal);
                                             total += getConvertedAmount(f.amount.$numberDecimal, exp.expenseCCY._id);
                                             return (
-                                                <tr key={`row${index}_${f.friendId.friendId}`}>
-                                                    <td key={`col_1_${index}_${f.friendId.friendId}`} style={{width:"9rem"}} className="fs-6">{f.friendId.friendName}</td>
-                                                    <td key={`col_2_${index}_${f.friendId.friendId}`} className="fs-6">{exp.expenseCCY.symbol}{f.amount.$numberDecimal} {getConvertedAmountStr(f.amount.$numberDecimal, exp.expenseCCY._id)}</td>
+                                                <tr key={`tbody_tr_${p.parentId}_${exp.expense._id}_${f.friendId.friendId}`}>
+                                                    <td key={`tbody_td1_${p.parentId}_${exp.expense._id}_${f.friendId.friendId}`} style={{width:"9rem"}} className="fs-6">{f.friendId.friendName}</td>
+                                                    <td key={`tbody_td2_${p.parentId}_${exp.expense._id}_${f.friendId.friendId}`} className="fs-6">{exp.expenseCCY.symbol}{f.amount.$numberDecimal} {getConvertedAmountStr(f.amount.$numberDecimal, exp.expenseCCY._id)}</td>
                                                 </tr>
                                             )
                                         })  
                                     } 
-                                    <tr>
-                                        <td className="text-dark text-end fs-6"><i><b>Subtotal:</b></i></td>
-                                        <td className="text-dark fs-6"><i><b>{exp.expenseCCY.symbol}{subtotal} {getConvertedAmountStr(subtotal, exp.expenseCCY._id)} </b></i></td>
+                                    <tr key={`tbody_tr_subtotal_${index}_${p.parentId}`}>
+                                        <td key={`tbody_td1_subtotal_${index}_${p.parentId}`} className="text-dark text-end fs-6"><i><b>Subtotal:</b></i></td>
+                                        <td key={`tbody_td2_subtotal_${index}_${p.parentId}`}  className="text-dark fs-6"><i><b>{exp.expenseCCY.symbol}{subtotal} {getConvertedAmountStr(subtotal, exp.expenseCCY._id)}</b></i></td>
                                     </tr>
                                     </>
                                 )
@@ -86,10 +87,10 @@ const DisplayExpenseBreakdown = ({calculationData}) => {
                         })
                     }
                     </tbody>
-                    <tfoot>
-                        <tr>
-                            <td className="bg-secondary text-light text-end fs-6"><b>Total:</b></td>
-                            <td className="bg-secondary text-light fs-6"><b>{calculationData.calculationCCY.symbol}{Math.round(total*100)/100}</b></td>
+                    <tfoot key={`tfooter_${p.parentId}`}>
+                        <tr key={`tfooter_tr_${p.parentId}`}>
+                            <td key={`tfooter_td1_${p.parentId}`} className="bg-secondary text-light text-end fs-6"><b>Total:</b></td>
+                            <td key={`tfooter_td2_${p.parentId}`} className="bg-secondary text-light fs-6"><b>{calculationData.calculationCCY.symbol}{Math.round(total*100)/100}</b></td>
                         </tr>
                     </tfoot>
                 </Table>

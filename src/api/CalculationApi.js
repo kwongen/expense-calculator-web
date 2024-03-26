@@ -29,6 +29,21 @@ export const getCalculationsApi = async (userProfile, eventId, filter={}) => {
         });
 }
 
+export const extendShareCodeApi = async (userProfile, calculationId) => {
+    const header = {headers: {"Authorization" : "Bearer " + userProfile.accessToken}};
+    const data = {profileId: userProfile.profileId, calculationId : calculationId };
+
+    return await AxiosInstance
+        .post('/calculation/extend-share-code', data, header)
+        .then(response => {
+            return response.data
+        })
+        .catch((error) => {
+            console.log("extendShareCodeExpiryApi: ", error?.response?.data);
+            return {error: error?.response?.data};
+        });
+}
+
 export const getSharedCalculationResultApi = async (eventId, calculationId, shareCode) => {
     const data = {eventId: eventId, calculationId : calculationId, shareCode: shareCode };
 

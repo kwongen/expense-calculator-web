@@ -112,10 +112,10 @@ function EditProfile () {
                             navigate("/main/event/list");
                           }}  />
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <div className="edit-profile border rounded my-4 py-4">
-                    <Row className="align-items-center m-2">
-                        <Col lg={2} className="">Name:</Col>
-                        <Col lg={10}>
+                <div className="edit-profile border rounded my-3 py-2">
+                    <Row className="align-items-center m-2 py-2">
+                        <Col xs={12} lg={3} className=""><b>Name:</b></Col>
+                        <Col xs={12} lg={9}>
                             <Form.Control
                                     name="name"
                                     value={formData.name}
@@ -128,9 +128,9 @@ function EditProfile () {
                                 />
                         </Col>
                     </Row>
-                    <Row className="align-items-center m-2">
-                        <Col lg={2} className="">Email:</Col>
-                        <Col lg={10}>
+                    <Row className="align-items-center m-2 py-2">
+                        <Col xs={12} lg={3} className=""><b>Email:</b></Col>
+                        <Col xs={12} lg={9}>
                             <Form.Control
                                     name="email"
                                     value={formData.email}
@@ -143,13 +143,13 @@ function EditProfile () {
                                 />
                         </Col>
                     </Row>
-                    <Row className="align-items-center m-2">
-                        <Col lg={2} className="">
+                    <Row className="align-items-center m-2 py-2">
+                        <Col xs={12} lg={3} className="">
                             <TooltipOverlay id="paymentLinkTips" titleStyle="text-start" 
                                 title={"Information that will be shown in the calculation result so that you can share to your friends. For example, 'Hi #debtor#, please pay #ccy##amount# to #creditor# by this payment link ....'. <br/><br/>Placeholders:<br/>#ccy# - currency symbol<br/>#amount# - payment amount<br/>#creditor# - name of creditor<br/>#debtor# - name of debtor<br/>#event_name# - name of the event<br/><br/>"}>
                                 <InfoCircle size={16} className="text-danger" />
-                            </TooltipOverlay> Payment Link Template: </Col>
-                        <Col lg={10}>
+                            </TooltipOverlay> <b>Payment Link Template:</b> </Col>
+                        <Col xs={12} lg={9}>
                             <Form.Control
                                     as="textarea" 
                                     rows={3}
@@ -161,14 +161,14 @@ function EditProfile () {
                                 />
                         </Col>
                     </Row>
-                    <Row className="align-items-center m-2">
-                        <Col lg={2} className="">
+                    <Row className="align-items-center m-2 py-2">
+                        <Col xs={12} lg={3} className="">
                             <TooltipOverlay id="bankInfoTips" titleStyle="text-start" 
                                 title={"Information that will be shown in the calculation result so that you can copy and share your bank account information to your friends.<br/><br/>"}>
                                 <InfoCircle size={16} className="text-danger" />
-                            </TooltipOverlay> Bank Information:
+                            </TooltipOverlay> <b>Bank Information:</b>
                         </Col>
-                        <Col lg={10}>
+                        <Col xs={12} lg={9}>
                             <Form.Control
                                     as="textarea" 
                                     rows={3}
@@ -181,11 +181,12 @@ function EditProfile () {
                         </Col>
                     </Row>  
                     <Row className="align-items-center m-2 py-3">
-                        <Col lg={2} className=""></Col>
-                        <Col lg={10}>
-                            <Button type="submit" variant="success" style={{width:"15rem"}}>Save</Button>
-                            {" "}
-                            <Button variant="outline-success" style={{width:"15rem"}} onClick={()=>initFormData()}>Reset</Button>
+                        <Col xs={12} lg={3} className=""></Col>
+                        <Col xs={12} lg={3}>
+                            <Button type="submit" variant="success" className="w-100 mb-2">Save</Button>
+                        </Col>
+                        <Col xs={12} lg={3}>
+                            <Button variant="outline-success" className="w-100 mb-2" onClick={()=>initFormData()}>Reset</Button>
                         </Col>
                     </Row>                                                                    
                 </div>

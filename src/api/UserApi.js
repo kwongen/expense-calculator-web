@@ -13,3 +13,17 @@ export const editProfileApi = async (userProfile, profileData) => {
             return {error: error?.response?.data};
         })
 }
+
+export const changePasswordApi = async (userProfile, changePasswordData) => {
+    const header = {headers: {"Authorization" : "Bearer " + userProfile.accessToken}};
+
+    return AxiosInstance
+        .post('/user/change-password', changePasswordData, header)
+        .then(response => {
+            return response.data;
+        })
+        .catch((error) => {
+            console.log("changePasswordApi: ", error?.response?.data);
+            return {error: error?.response?.data};
+        })
+}

@@ -94,7 +94,7 @@ const changePasswordSchema = yup.object().shape({
         .required("New passsword: required")
         .notOneOf([yup.ref('currentPassword'), null], 'New password: cannot be the same as current'),
     confirmPassword: yup.string()
-        .required("Confirm passsword: required")
+        .required("Confirm password: required")
         .oneOf([yup.ref('newPassword'), null], 'Confirm password: must match new password'),        
 });
 

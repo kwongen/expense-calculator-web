@@ -61,8 +61,8 @@ function SiteNavBar () {
                     <Dropdown.Menu>
                         <Dropdown.ItemText>Hi, {`${userProfile.name}`}</Dropdown.ItemText>
                         <Dropdown.Divider />
-                        <Dropdown.Item eventKey="1" onClick={() => navigate("/main/user/edit-profile")}>My profile</Dropdown.Item>
-                        <Dropdown.Item eventKey="2">Change Password</Dropdown.Item>
+                        <Dropdown.Item onClick={() => navigate("/main/user/edit-profile")}>My profile</Dropdown.Item>
+                        <Dropdown.Item onClick={() => navigate("/main/user/change-password")}>Change Password</Dropdown.Item>
                     </Dropdown.Menu>
                 </Dropdown>
                 <div onClick={() => navigate("/main/event/list")}>

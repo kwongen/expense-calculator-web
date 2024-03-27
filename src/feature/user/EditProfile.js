@@ -89,7 +89,6 @@ function EditProfile () {
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setAlertConfig({ show: true, heading: "Error found:", body: errorStr })
         } else {
-            console.log(_formData)
             saveToDB(_formData);
         }               
     }

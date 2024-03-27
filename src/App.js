@@ -12,7 +12,6 @@ import YesNoModal from "./component/YesNoModal";
 
 import Login from "./feature/auth/Login"
 import Register from "./feature/auth/Register"
-import EditProfile from "./feature/user/EditProfile"
 import FriendList from "./feature/friend/FriendList"
 import EventList from "./feature/event/EventList"
 import AddEvent from "./feature/event/AddEvent"
@@ -23,9 +22,10 @@ import ExpenseHistory from "./feature/expense/ExpenseHistory"
 import AddCalculation from "./feature/calculation/AddCalculation"
 import ViewCalculation from "./feature/calculation/ViewCalculation"
 import ShareCalculationResult from "./feature/calculation/ShareCalculationResult"
+import EditProfile from "./feature/user/EditProfile"
+import ChangePassword from "./feature/user/ChangePassword"
 
 import {isSessionAlive, logoutApi} from "./api/AuthApi"
-
 
 function App() {
   const initUserProfile = {uid:"", name:"", email:"", accessToken:"", loginAt:"", isAuthenticated:false};
@@ -114,6 +114,9 @@ function App() {
             <Route element={<ProtectedRoute isAuthenticated={userProfile.isAuthenticated} />}>
               <Route path="/main/user/edit-profile" element={<EditProfile />} />
             </Route>
+            <Route element={<ProtectedRoute isAuthenticated={userProfile.isAuthenticated} />}>
+              <Route path="/main/user/change-password" element={<ChangePassword />} />
+            </Route>            
             <Route element={<ProtectedRoute isAuthenticated={userProfile.isAuthenticated} />}>
               <Route path="/main/friend/list" element={<FriendList />} />
             </Route>

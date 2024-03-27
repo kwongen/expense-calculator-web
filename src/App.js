@@ -12,6 +12,7 @@ import YesNoModal from "./component/YesNoModal";
 
 import Login from "./feature/auth/Login"
 import Register from "./feature/auth/Register"
+import EditProfile from "./feature/user/EditProfile"
 import FriendList from "./feature/friend/FriendList"
 import EventList from "./feature/event/EventList"
 import AddEvent from "./feature/event/AddEvent"
@@ -110,6 +111,9 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
             <Route path="/result/:eventId/:calculationId/:shareCode" element={<ShareCalculationResult />} />
+            <Route element={<ProtectedRoute isAuthenticated={userProfile.isAuthenticated} />}>
+              <Route path="/main/user/edit-profile" element={<EditProfile />} />
+            </Route>
             <Route element={<ProtectedRoute isAuthenticated={userProfile.isAuthenticated} />}>
               <Route path="/main/friend/list" element={<FriendList />} />
             </Route>

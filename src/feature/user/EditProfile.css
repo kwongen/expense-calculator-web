@@ -1,0 +1,10 @@
+.edit-profile {
+    width : 75% !important;
+    background-color: rgb(215, 213, 213);
+}
+
+@media screen and (max-width: 576px) {
+    .edit-profile {
+        width : 100% !important;
+    }
+  }

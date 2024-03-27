@@ -1,8 +1,9 @@
+import React from 'react';
 import Nav from "react-bootstrap/Nav"
 import Navbar from "react-bootstrap/Navbar"
 import Stack from "react-bootstrap/Stack"
-import OverlayTrigger from "react-bootstrap/OverlayTrigger";
-import Tooltip from "react-bootstrap/Tooltip";
+import Dropdown from "react-bootstrap/Dropdown";
+
 import { useNavigate } from "react-router-dom";
 
 import { PersonCircle } from "react-bootstrap-icons";
@@ -21,6 +22,21 @@ function SiteNavBar () {
         resetAccess();
     }
 
+    const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+        /* eslint-disable */
+        <a
+            href=""
+            ref={ref}
+            className="profile"
+            onClick={(e) => {
+                e.preventDefault();
+                onClick(e);
+            }}
+        >
+            {children}
+        </a>      
+    ));
+
     return (
         <Navbar fixed="top" collapseOnSelect expand="sm" bg="dark" variant="dark"
             className="container-fluid"
@@ -37,12 +53,18 @@ function SiteNavBar () {
         </Navbar.Brand>
         <Navbar.Brand className="ms-0" href="#home">
             <Stack direction="horizontal" gap={3}>
-                <OverlayTrigger
-                    placement="bottom"
-                    overlay={<Tooltip id="button-tooltip-2">Hello {`${userProfile.name}`}</Tooltip>}
-                >
-                    <PersonCircle size={32}/>
-                </OverlayTrigger>
+                <Dropdown data-bs-theme="dark">
+                    <Dropdown.Toggle as={CustomToggle} id="dropdown-custom-components">
+                        <PersonCircle size={32}/>
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <Dropdown.ItemText>Hi, {`${userProfile.name}`}</Dropdown.ItemText>
+                        <Dropdown.Divider />
+                        <Dropdown.Item eventKey="1" onClick={() => navigate("/main/user/edit-profile")}>My profile</Dropdown.Item>
+                        <Dropdown.Item eventKey="2">Change Password</Dropdown.Item>
+                    </Dropdown.Menu>
+                </Dropdown>
                 <div onClick={() => navigate("/main/event/list")}>
                 Expense Calculator
                 </div>

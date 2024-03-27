@@ -156,4 +156,11 @@
   max-width: 9rem;
 }
 
+a.profile {
+  color: white;
+}
+
+a.profile:hover {
+  color: rgb(200, 200, 200);
+}
 

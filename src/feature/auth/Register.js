@@ -128,7 +128,7 @@ const Register = () => {
                         <u>Please fill in below to register:</u>
                     </Card.Subtitle>
                     <MessageAlert alertConfig={alertConfig} setAlertConfig={setAlertConfig} />
-                    <Form noValidate onSubmit={handleSubmit}>
+                    <Form noValidate onSubmit={handleSubmit} autoComplete="off">
                         <InputGroup className="mt-4 mb-3">
                             <InputGroup.Text className="w-25">Name</InputGroup.Text>
                             <Form.Control

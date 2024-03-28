@@ -73,7 +73,7 @@ function ExpenseForm ({expenseFormData, setExpenseFormData, setAlertConfig, save
         setValidated(true);
 
         const dataForSubmit = {...expenseFormData};
-
+console.log(dataForSubmit)
         // only provided selected friedId for submission
         dataForSubmit.whoInvolved = dataForSubmit
                                     .whoInvolved
@@ -239,7 +239,7 @@ function ExpenseForm ({expenseFormData, setExpenseFormData, setAlertConfig, save
                             className="ms-auto">Save Expense</Button>
                     </Col>
                     <Col xs={12} sm={6} className="mt-2">
-                        <Button variant="danger" 
+                        <Button variant="outline-danger" 
                             size="lg" 
                             style={{ width: "100%" }}
                             onClick={cancelAction}

@@ -160,13 +160,13 @@ function ExpenseHistory () {
             <div className="w-100 ">
                 <Row className="m-0 p-0 border rounded-border">
                     <Col xs={12} lg={1} className="fs-3 rounded-border-left border-end bg-secondary text-light text-center protest-riot-regular-lg" style={{overflow:"hidden"}}>Event: </Col>
-                    <Col xs={12} lg={2} className="fs-3 text-center protest-riot-regular-lg"><b>{eventData.eventName}</b></Col>
+                    <Col xs={12} lg={2} className="fs-3 text-center protest-riot-regular-lg text-success"><b>{eventData.eventName}</b></Col>
                     <Col xs={0} lg={1}></Col>
                     <Col xs={12} lg={2} className="fs-3 border-end bg-secondary text-light text-center protest-riot-regular-lg">Last Expenses:</Col>
-                    <Col xs={12} lg={2} className="fs-3 text-center protest-riot-regular-lg"><b>{lastExpenseDate}</b></Col>   
+                    <Col xs={12} lg={2} className="fs-3 text-center protest-riot-regular-lg text-success"><b>{lastExpenseDate}</b></Col>   
                     <Col xs={0} lg={1}></Col>                 
                     <Col xs={12} lg={2} className="fs-3 border-end bg-secondary text-light text-center protest-riot-regular-lg"># Expenses:</Col>
-                    <Col xs={12} lg={1} className="fs-3 text-center protest-riot-regular-lg"><b>{expenseData.length}</b></Col>
+                    <Col xs={12} lg={1} className="fs-3 text-center protest-riot-regular-lg text-success"><b>{expenseData.length}</b></Col>
                 </Row>
             </div>
             <div className="mt-3 fs-3 ">

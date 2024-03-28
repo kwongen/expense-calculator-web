@@ -27,9 +27,9 @@ function EventForm ({eventData, setEventData, setAlertConfig, saveToDB}) {
     useEffect( () => {
         if(state) {
             eventData = state;
-            eventData.expenseDefaultCCY = eventData.expenseDefaultCCY._id;
-            eventData.eventFrequency = eventData.eventFrequency._id;
-            eventData.eventNature = eventData.eventNature._id;
+            eventData.expenseDefaultCCY = eventData?.expenseDefaultCCY?._id;
+            eventData.eventFrequency = eventData?.eventFrequency?._id;
+            eventData.eventNature = eventData?.eventNature?._id;
             setEventData(state);
         }
         setAlertConfig({show:false, heading:"", body:""})

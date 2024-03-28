@@ -149,7 +149,7 @@ const Register = () => {
                                 type="email"
                                 placeholder="Enter your email"
                                 required
-                                autocomplete="new-password"
+                                autoComplete="off"
                             />
                         </InputGroup>
                         <InputGroup className="mt-2 mb-3">
@@ -160,7 +160,7 @@ const Register = () => {
                                 type={showPass ? "text" : "password"}
                                 placeholder="Enter your password"
                                 required
-                                autocomplete="new-password"
+                                autoComplete="off"
                             />
                             <InputGroup.Text onClick={clickShowHideEye}>
                                 {showPass ? <Eye /> : <EyeSlashFill />}

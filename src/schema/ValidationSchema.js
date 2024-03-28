@@ -60,8 +60,8 @@ const expenseSchema = yup.object().shape({
     expenseType: yup.string().required("Expense type: required"),
     expenseDesc: yup.string(),
     expenseCCY: yup.string().required("Currency: required"),
-    expenseAmt: yup.number().typeError("Invalid expense amount provide. It should be a number."),
-    expenseDate: yup.date().typeError("Invalid expense date format provide.").required("Expense date: required"),
+    expenseAmt: yup.number().moreThan(0,"Expense Amount: should be more than zero.").typeError("Expense Amount: require a number."),
+    expenseDate: yup.date().required("Expense Date: required").typeError("Expense Date: invalid date."),
     paidBy: yup.string().required("Paid by: required"),
     whoInvolved: yup.array().of(yup.string()),
     active: yup.boolean()

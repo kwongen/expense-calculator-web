@@ -20,11 +20,11 @@ import CalculatorSVG from "../../image/calculator-icon4.svg"
 import SignInGoogleSVG from "../../image/sign_in_with_google.svg"
 
 
-function Login() {
-  const variant='success';  //set the boot-strap theme
-  const {initializeAccess, resetAccess} = useAuthContext();
+const Login = () => {
+  const variant = 'success';  //set the boot-strap theme
+  const { initializeAccess, resetAccess } = useAuthContext();
 
-  const [modalConfig, setModalConfig] = useState({show: false, heading: "", body:""});
+  const [modalConfig, setModalConfig] = useState({ show: false, heading: "", body: "" });
   const [regModal, showRegModal] = useState(false);
 
   const [thirdPartyCredential, setThirdPartyCredential] = useState();
@@ -36,7 +36,7 @@ function Login() {
 
   const handleSubmit = async (event) => {
     const form = event.currentTarget;
-    
+
     event.preventDefault();
     // event.stopPropagation();
 
@@ -44,14 +44,16 @@ function Login() {
       return
     }
 
-    const response = await loginApi({email : form._email.value, 
-                                    password : form._password.value});
-                               
-    if( response && response.auth ) {
-// console.log("login success", response.auth);
+    const response = await loginApi({
+      email: form._email.value,
+      password: form._password.value
+    });
+
+    if (response && response.auth) {
+      // console.log("login success", response.auth);
       initializeAccess(response.auth)
     } else {
-      setModalConfig({show: true, heading: "Error", body:"Incorrect username or password. Please try again!"})
+      setModalConfig({ show: true, heading: "Error", body: "Incorrect username or password. Please try again!" })
       resetAccess();
     }
   };
@@ -60,9 +62,9 @@ function Login() {
     const response = await googleLoginApi(credential);
 
     if (response && response.auth) {
-//console.log("login success", response.auth);
+      //console.log("login success", response.auth);
       initializeAccess(response.auth)
-    } else if( response && response.action ) {
+    } else if (response && response.action) {
       setThirdPartyCredential(credential);
       showRegModal(true);
     } else {
@@ -136,7 +138,7 @@ function Login() {
                 {showPass ? <Eye /> : <EyeSlashFill />}
               </InputGroup.Text>
             </InputGroup>
-            
+
             <Button variant="dark" type="submit" className="w-100 mt-2 fs-5">Login</Button>
           </Form>
           <Card.Footer>
@@ -156,7 +158,7 @@ function Login() {
             />
             </div> */}
             <div>
-              <Image src={SignInGoogleSVG} onClick={()=>googleLogin()}  />
+              <Image src={SignInGoogleSVG} onClick={() => googleLogin()} />
             </div>
           </Card.Footer>
         </Card.Body>

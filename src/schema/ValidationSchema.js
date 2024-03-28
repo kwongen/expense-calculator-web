@@ -13,9 +13,11 @@ const registerSchema = yup.object().shape({
         .matches(/[0-9]/, 'Password: requires a number')
         .matches(/[a-z]/, 'Password: requires a lowercase letter')
         .matches(/[A-Z]/, 'Password: requires an uppercase letter')
-        .matches(/[^\w]/, 'Password: requires a symbol'),
+        .matches(/[^\w]/, 'Password: requires a symbol')
+        .required("Password: required"),
     passwordConfirm: yup.string()
-        .oneOf([yup.ref('password'), null], 'Confirm: must match "Password" field value'),
+        .oneOf([yup.ref('password'), null], 'Confirm: must match "Password" field value')
+        .required("Confirm: required"),
     regcode: yup.string().required("Reg Code: required"),
 });
 

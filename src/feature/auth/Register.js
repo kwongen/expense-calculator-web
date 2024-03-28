@@ -128,7 +128,7 @@ const Register = () => {
                         <u>Please fill in below to register:</u>
                     </Card.Subtitle>
                     <MessageAlert alertConfig={alertConfig} setAlertConfig={setAlertConfig} />
-                    <Form noValidate onSubmit={handleSubmit} autoComplete="off">
+                    <Form noValidate onSubmit={handleSubmit} autoComplete="new-password">
                         <InputGroup className="mt-4 mb-3">
                             <InputGroup.Text className="w-25">Name</InputGroup.Text>
                             <Form.Control
@@ -149,7 +149,6 @@ const Register = () => {
                                 type="email"
                                 placeholder="Enter your email"
                                 required
-                                autoComplete="off"
                             />
                         </InputGroup>
                         <InputGroup className="mt-2 mb-3">
@@ -160,7 +159,6 @@ const Register = () => {
                                 type={showPass ? "text" : "password"}
                                 placeholder="Enter your password"
                                 required
-                                autoComplete="off"
                             />
                             <InputGroup.Text onClick={clickShowHideEye}>
                                 {showPass ? <Eye /> : <EyeSlashFill />}

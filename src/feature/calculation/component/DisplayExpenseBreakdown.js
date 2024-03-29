@@ -79,7 +79,7 @@ const DisplayExpenseBreakdown = ({calculationData}) => {
                                     } 
                                     <tr key={`tbody_tr_subtotal_${index}_${p.parentId}`}>
                                         <td key={`tbody_td1_subtotal_${index}_${p.parentId}`} className="text-dark text-end fs-6"><i><b>Subtotal:</b></i></td>
-                                        <td key={`tbody_td2_subtotal_${index}_${p.parentId}`}  className="text-dark fs-6"><i><b>{exp.expenseCCY.symbol}{subtotal} {getConvertedAmountStr(subtotal, exp.expenseCCY._id)}</b></i></td>
+                                        <td key={`tbody_td2_subtotal_${index}_${p.parentId}`}  className="text-dark fs-6"><i><b>{exp.expenseCCY.symbol}{Math.round(subtotal*100)/100} {getConvertedAmountStr(subtotal, exp.expenseCCY._id)}</b></i></td>
                                     </tr>
                                     </>
                                 )

@@ -60,7 +60,8 @@ const DisplayExpenseBreakdown = ({calculationData}) => {
                                             {` ${exp.expense.expenseDate.slice(0,10)} / 
                                             ${convertExpenseType(exp.expense.expenseType)} / 
                                             paid by ${exp.paidBy.friendName} /
-                                            ${exp.expenseCCY.symbol}${exp.expenseAmt.$numberDecimal} ${getConvertedAmountStr(exp.expenseAmt.$numberDecimal,exp.expenseCCY._id)} 
+                                            ${exp.expenseCCY.symbol}${exp.expenseAmt.$numberDecimal} ${getConvertedAmountStr(exp.expenseAmt.$numberDecimal,exp.expenseCCY._id)} /
+                                            ${exp.costSplit.length} people
                                             `}
                                             </i>
                                         </td>

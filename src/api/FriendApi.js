@@ -14,9 +14,9 @@ export const getFriendsApi = async (userProfile) => {
         });
 }
 
-export const getFlattenedFriendsApi = async (userProfile) => {
+export const getFlattenedFriendsApi = async (userProfile, showActiveOnly=true) => {
     const header = {headers: {"Authorization" : "Bearer " + userProfile.accessToken}};
-    const data = {profileId : userProfile.profileId}
+    const data = {profileId : userProfile.profileId, showActiveOnly: showActiveOnly}
     return await AxiosInstance
         .post('/friend/get-flattened', data, header)
         .then(response => {

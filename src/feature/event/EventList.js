@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
-import { ScrollRestoration, Link } from "react-router-dom";
-import Card from "react-bootstrap/Card";
+import { Link } from "react-router-dom";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
@@ -88,21 +87,6 @@ function EventList () {
                         </Col>
                     </Row>
                 </Container>
-
-                // <div className=" d-flex justify-content-center">
-                //     <Card className="w-75 my-5 py-3 px-5">
-                //         <Card.Body className="">
-                //             <Card.Title className="text-success fs-1">Welcome to Expense Calculator!</Card.Title>
-                //             <Card.Body className="text-secondary fs-2">
-                //                 <ol>
-                //                     <li>Create your <Link to="/main/friend/list">friend &amp; family</Link> list.</li>
-                //                     <li>Create <Link to="/main/event/add">event(s)</Link> for entering your expenses.</li>
-                //                     <li>Finally, create expenses and do calculation when ready.</li>
-                //                 </ol>
-                //             </Card.Body>
-                //         </Card.Body>
-                //     </Card>
-                // </div>
                 )}
         </SiteLayout>
     )
